@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -74,7 +75,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3V-ih-1Ky">
-                                <rect key="frame" x="235" y="80" width="130.5" height="19.5"/>
+                                <rect key="frame" x="40" y="102" width="520" height="19.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -93,28 +94,40 @@
                                     <action selector="checkAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iGp-zz-0Xx"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6U-hL-xRc">
+                                <rect key="frame" x="518" y="51" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.031372549019607843" green="0.16862745098039217" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="M6U-hL-xRc" secondAttribute="trailing" constant="20" id="6Mg-lv-yi9"/>
                             <constraint firstItem="k69-Ex-uhf" firstAttribute="leading" secondItem="l5u-yl-PSE" secondAttribute="leading" id="7yZ-Hs-CPW"/>
                             <constraint firstItem="AS4-HX-g9f" firstAttribute="top" secondItem="J1V-MS-ECi" secondAttribute="bottom" constant="30" id="9iG-1r-u4A"/>
                             <constraint firstItem="AS4-HX-g9f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EHX-8t-Txi"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="top" secondItem="AS4-HX-g9f" secondAttribute="bottom" constant="43" id="EfT-FD-QHS"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="top" secondItem="l5u-yl-PSE" secondAttribute="bottom" constant="49" id="GXQ-PY-A6x"/>
                             <constraint firstItem="J1V-MS-ECi" firstAttribute="leading" secondItem="AS4-HX-g9f" secondAttribute="leading" id="Hbv-nw-J5j"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="I3V-ih-1Ky" secondAttribute="trailing" constant="20" id="IJ2-o5-dda"/>
+                            <constraint firstItem="I3V-ih-1Ky" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="NE4-f3-we6"/>
                             <constraint firstItem="k69-Ex-uhf" firstAttribute="top" secondItem="AS4-HX-g9f" secondAttribute="bottom" constant="22" id="QoV-yJ-tbH"/>
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SR4-zJ-vRr"/>
                             <constraint firstItem="AS4-HX-g9f" firstAttribute="leading" secondItem="k69-Ex-uhf" secondAttribute="leading" id="UE8-Xm-WNS"/>
+                            <constraint firstItem="I3V-ih-1Ky" firstAttribute="top" secondItem="M6U-hL-xRc" secondAttribute="bottom" constant="30" id="UyQ-Qn-Xxr"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K17-uy-MvB" secondAttribute="bottom" constant="50" id="Wtr-Je-E34"/>
                             <constraint firstItem="l5u-yl-PSE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YoV-WF-V0n"/>
                             <constraint firstItem="I3V-ih-1Ky" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="bBC-ae-VMK"/>
                             <constraint firstItem="AS4-HX-g9f" firstAttribute="top" secondItem="J1V-MS-ECi" secondAttribute="bottom" constant="22" id="cT2-6J-Fd5"/>
                             <constraint firstItem="l5u-yl-PSE" firstAttribute="top" secondItem="k69-Ex-uhf" secondAttribute="bottom" constant="22" id="p9Q-s3-ls8"/>
                             <constraint firstItem="K17-uy-MvB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="t2h-mN-Tdg"/>
+                            <constraint firstItem="M6U-hL-xRc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="twu-54-hyT"/>
                             <constraint firstItem="J1V-MS-ECi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zMi-oS-bzf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="bBC-ae-VMK"/>
                                 <exclude reference="zMi-oS-bzf"/>
                                 <exclude reference="9iG-1r-u4A"/>
                                 <exclude reference="EfT-FD-QHS"/>
@@ -123,6 +136,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="lightningModeTimer" destination="M6U-hL-xRc" id="b6G-xB-dEI"/>
                         <outlet property="option1" destination="J1V-MS-ECi" id="96p-pD-FwX"/>
                         <outlet property="option2" destination="AS4-HX-g9f" id="z42-PT-V8i"/>
                         <outlet property="option3" destination="k69-Ex-uhf" id="Vtg-5j-xUr"/>

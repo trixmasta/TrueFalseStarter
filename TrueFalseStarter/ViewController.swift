@@ -14,15 +14,15 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
-    var trivia = Trivia()
-    var triviaQuestions: [Question] = []
-    
+    var trivia = Trivia(lightningMode: true)
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var option1: UIButton!
     @IBOutlet weak var option2: UIButton!
     @IBOutlet weak var option3: UIButton!
     @IBOutlet weak var option4: UIButton!
+    
+    @IBOutlet weak var lightningModeTimer: UILabel!
     
     var options: [UIButton] = []
     
@@ -32,6 +32,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        options = [option1, option2, option3, option4]
         
         loadGameStartSound()
         // Start game
@@ -45,8 +47,11 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
-        trivia.indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(triviaQuestions.count)
-        let questionDictionary = triviaQuestions[trivia.indexOfSelectedQuestion]
+        trivia.indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.questions.count)
+        
+        print("index \(trivia.indexOfSelectedQuestion)")
+        
+        let questionDictionary = trivia.questions[trivia.indexOfSelectedQuestion]
         questionField.text = questionDictionary.question
         playAgainButton.hidden = true
         
@@ -55,6 +60,11 @@ class ViewController: UIViewController {
             let optionString = questionDictionary.options[optionIndex]
             option.setTitle(optionString, forState: UIControlState.Normal)
             optionIndex += 1
+        }
+        
+        if trivia.lightningMode {
+            startTimer()
+            
         }
     }
     
@@ -73,10 +83,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func checkAnswer(sender: UIButton) {
-        // Increment the questions asked counter
-        trivia.questionsAsked += 1
+        // call function that tells Trivia to increment number of questions asked and remove the asked question for future questions
         
-        let selectedQuestionDict = triviaQuestions[trivia.indexOfSelectedQuestion]
+        let selectedQuestionDict = trivia.questions[trivia.indexOfSelectedQuestion]
         let correctAnswer = selectedQuestionDict.isCorrect(sender.titleLabel!.text!)
         
         if  correctAnswer {
@@ -86,10 +95,17 @@ class ViewController: UIViewController {
             questionField.text = "Sorry, wrong answer!"
         }
         
+        displayCorrectAnswer()
+        
+        trivia.questionFinished()  // must make sure this is placed properly, because this will remove item from array which can then potentially cause an indexOutOfBounds error
+        
         loadNextRoundWithDelay(seconds: 2)
     }
     
     func nextRound() {
+        
+        resetOptionsWithNewQuestion()
+        
         if trivia.questionsAsked == trivia.questionsPerRound {
             // Game is over
             displayScore()
@@ -105,10 +121,57 @@ class ViewController: UIViewController {
             option.hidden = false
         }
         
-        trivia.reset()
+        // reset the trivia game
+        
+        trivia = Trivia(lightningMode: true)
         
         nextRound()
     }
+    
+    func displayCorrectAnswer(){
+        
+        let indexOfCorrectAnswer = trivia.questions[trivia.indexOfSelectedQuestion].answerKey
+        
+        var i = 0
+        
+        for _ in options {
+            
+            switch i {
+                
+            case indexOfCorrectAnswer:
+                options[i].alpha = 1.0
+            default:
+                options[i].alpha = 0.2
+            }
+            
+            i += 1
+        }
+        
+        
+    }
+    
+    func skipQuestion(){
+        // this is called when timer is up for question during lightning mode
+        displayCorrectAnswer()
+        
+        trivia.questionFinished()
+
+        loadNextRoundWithDelay(seconds: 2)
+    }
+    
+    func startTimer(){
+       
+       trivia.time = NSTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.runTimer), userInfo: nil, repeats: true)
+        
+        NSRunLoop.currentRunLoop().addTimer(trivia.time, forMode: NSRunLoopCommonModes)
+        
+    }
+    
+    func displayTimerText(){
+        let remainingSeconds = Int(trivia.lightningModeTimePerRound - trivia.timeElapsed)
+        self.lightningModeTimer.text = "Time Left: \(remainingSeconds)"
+    }
+    
     
 
     
@@ -134,6 +197,38 @@ class ViewController: UIViewController {
     
     func playGameStartSound() {
         AudioServicesPlaySystemSound(gameSound)
+    
     }
+    
+    func resetOptionsWithNewQuestion(){
+        // change settings when new question is displayed
+        
+        // reset the display of options
+        for option in options {
+            option.alpha = 1.0
+        }
+        
+        // reset the timer counter for this new question (if lightning mode is enabled)
+        if trivia.lightningMode {
+           
+            trivia.timeElapsed = 0
+        }
+    }
+    
+    func runTimer(){
+        
+        if trivia.timeElapsed > trivia.lightningModeTimePerRound {
+          
+            skipQuestion()
+            
+        }else{
+            
+            displayTimerText()
+            trivia.timeElapsed += 1
+            
+        }
+        
+    }
+
 }
 

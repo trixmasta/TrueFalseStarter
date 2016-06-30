@@ -33,26 +33,38 @@ struct Trivia {
      let question10 = Question(question: "Which of these countries won the most medals in the 2012 Summer Games?", options: ["France","Germany","Japan","Great Britian"], answerKey: 4)
     
     
-    let list: [Question]
+    var questions: [Question]
     
     var questionsPerRound: Int
     
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
+    
+    var lightningMode: Bool
+    
+    let lightningModeTimePerRound: Double = 15
+    
+    var time: NSTimer = NSTimer()
+    var timeElapsed: Double = 0
 
     
-    init() {
+    init(lightningMode: Bool) {
         
-        self.list = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
+        self.questions = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10]
         
-        self.questionsPerRound = list.count
-        
+        self.questionsPerRound = questions.count
+
+        self.lightningMode = lightningMode
     }
+
     
-    mutating func reset(){
-        self.questionsAsked = 0
-        self.correctQuestions = 0
+    mutating func questionFinished(){
+        // this is called when user chooses an option, we move on to next question so we should increment counter and remove the question from array (if user plays again, a new Trivia() object will be created so original questions will come back)
+        
+        time.invalidate()
+        questionsAsked += 1
+        self.questions.removeAtIndex(indexOfSelectedQuestion)
     }
     
     

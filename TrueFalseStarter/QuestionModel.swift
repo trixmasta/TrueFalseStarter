@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 struct Question {
     
     let question: String
     let options: [String]
     let answerKey: Int
+
     
     init(question: String, options: [String], answerKey: Int){
         self.question = question
@@ -23,5 +25,6 @@ struct Question {
     func isCorrect(answer: String) -> Bool {
         return answer == self.options[answerKey]
     }
+    
     
 }
